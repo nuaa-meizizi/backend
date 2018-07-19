@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@RequestMapping(value = "/signup",method=RequestMethod.POST)
-	public GenericJsonResult<Map<String, Object>> signup(@RequestParam(value = "name", required = true) String name,@RequestParam(value = "password", required = true) String password){
+	public GenericJsonResult<Map<String, Object>> signUp(@RequestParam(value = "name", required = true) String name,@RequestParam(value = "password", required = true) String password){
 		 return userService.signUp(name,password);
 	}
 	

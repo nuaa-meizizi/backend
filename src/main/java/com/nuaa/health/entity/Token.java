@@ -10,16 +10,16 @@ import javax.persistence.Table;
 public class Token {
 	@Id
 	@Column(name = "userid")
-	private Long userid;
+	private Long userId;
 	@Column(name = "token")
 	private String token;
 	@Column(name = "expire")
 	private String expire;
-	public Long getUserid() {
-		return userid;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setUserid(Long userid) {
-		this.userid = userid;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	public String getToken() {
 		return token;

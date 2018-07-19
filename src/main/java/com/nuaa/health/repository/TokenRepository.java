@@ -7,7 +7,8 @@ import com.nuaa.health.entity.Token;
 
 @Repository
 public interface TokenRepository extends CrudRepository<Token, Long>{
-	Boolean existsByUserid(Long uid);
-	Token findTokenByUserid(Long uid);
-	void deleteByUserid(Long uid);
+	Boolean existsByUserId(Long uid);
+	Token findTokenByUserId(Long uid);
+	Token findTokenByToken(String token);
+	void deleteByUserId(Long uid);
 }

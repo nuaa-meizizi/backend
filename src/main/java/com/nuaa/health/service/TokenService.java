@@ -26,7 +26,7 @@ public class TokenService {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
 			byte[] results = md5.digest(text.getBytes());
 			token.setToken(byteArrayToHexString(results));
-			token.setUserid(uid);
+			token.setUserId(uid);
 			token.setExpire(Long.toString(System.currentTimeMillis()+expireTime));
 			tokenRepository.save(token);
 		} catch (NoSuchAlgorithmException e) {
@@ -38,24 +38,29 @@ public class TokenService {
 
 	@Transactional
 	public void deleteToken(Long uid) {
-		tokenRepository.deleteByUserid(uid);
+		tokenRepository.deleteByUserId(uid);
 	}
 	
 	@Transactional
 	public String updateToken(Long uid) {
-		Boolean exist = tokenRepository.existsByUserid(uid);
+		Boolean exist = tokenRepository.existsByUserId(uid);
 		if (exist) {
-			Token token =  tokenRepository.findTokenByUserid(uid);
+			Token token =  tokenRepository.findTokenByUserId(uid);
 			if (Long.valueOf(token.getExpire()) > System.currentTimeMillis()) {		//没有过期就延长
 				return token.getToken();
 			}
 			else {		//过期删除新建
-				tokenRepository.deleteByUserid(uid);
+				tokenRepository.deleteByUserId(uid);
 				return addToken(uid);
 			}
 		}
 		//不存在直接新建一个
 		return addToken(uid);
+	}
+	
+	public Long getUid(String token) {
+		Long uid = tokenRepository.findTokenByToken(token).getUserId();
+		return uid;
 	}
 
 	//轮换字节数组为十六进制字符串
