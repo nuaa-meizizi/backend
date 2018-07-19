@@ -9,4 +9,6 @@ public class HResult {
 	
 	public final static int E_ERROR_USER_EXISTENCE = 130000;
 	public final static int E_ERROR_PASSWORD_ERROR = 130001;
+
+	public final static int E_ERROR_USER_NOTEXIST = 130002;
 }
