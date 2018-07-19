@@ -18,11 +18,11 @@ public class UserController {
 	private UserService userService;
 	@RequestMapping(value = "/signup",method=RequestMethod.POST)
 	public GenericJsonResult<Map<String, Object>> signup(@RequestParam(value = "name", required = true) String name,@RequestParam(value = "password", required = true) String password){
-		 return userService.signup(name,password);
+		 return userService.signUp(name,password);
 	}
 	
 	@RequestMapping(value = "/login",method=RequestMethod.POST)
 	public GenericJsonResult<Map<String, Object>> login(@RequestParam(value = "name", required = true) String name,@RequestParam(value = "password", required = true) String password) {
-		return userService.check_login(name,password);
+		return userService.login(name,password);
 	}
 }

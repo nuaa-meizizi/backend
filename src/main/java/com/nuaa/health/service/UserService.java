@@ -17,7 +17,10 @@ import com.nuaa.health.util.HResult;
 public class UserService {
 	@Autowired
 	UserRepository userRepository;
-	public GenericJsonResult<Map<String, Object>> check_login(String name,String pwd) {
+	@Autowired
+	TokenService tokenService;
+	
+	public GenericJsonResult<Map<String, Object>> login(String name,String pwd) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Map<String, Object> data = new HashMap<String, Object>();  
 		User user = userRepository.findUserByNameAndPassword(name,pwd);
@@ -25,7 +28,9 @@ public class UserService {
 			result.setStatus(HResult.E_ERROR_PASSWORD_ERROR);
 		}
 		else {
+			String token = tokenService.updateToken(user.getId());
 			data.put("id", user.getId());
+			data.put("token", token);
 			result.setData(data);
 		}
 		return result;
@@ -33,7 +38,7 @@ public class UserService {
 	
 
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> signup(String name,String pwd) {
+	public GenericJsonResult<Map<String, Object>> signUp(String name,String pwd) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Map<String, Object> data = new HashMap<String, Object>();  
 		Boolean exist = userRepository.existsByName(name);
@@ -46,7 +51,9 @@ public class UserService {
 			user.setPassword(pwd);
 			userRepository.save(user);
 			user = userRepository.findUserByNameAndPassword(name, pwd);
+			String token = tokenService.addToken(user.getId());
 			data.put("id", user.getId());
+			data.put("token", token);
 			result.setData(data);
 		}
 		return result;
