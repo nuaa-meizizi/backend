@@ -31,7 +31,7 @@ public class UserInfoService {
             result.setData(data);
 		}
 		else {
-            result.setStatus(HResult.E_ERROR_USER_NOTEXIST);
+            result.setStatus(HResult.E_USER_NOTEXIST);
 		}
 		return result;
 	}
@@ -42,7 +42,7 @@ public class UserInfoService {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Boolean exist = userinfoRepository.existsByUserid(userid);
 		if(exist) {
-			result.setStatus(HResult.E_ERROR_USER_EXISTENCE);
+			result.setStatus(HResult.E_USER_EXISTENCE);
 		}
 		else {
 			UserInfo userinfo = new UserInfo();
@@ -66,7 +66,7 @@ public class UserInfoService {
 			userinfoRepository.save(userinfo);
 		}
 		else {
-            result.setStatus(HResult.E_ERROR_USER_NOTEXIST);
+            result.setStatus(HResult.E_USER_NOTEXIST);
 		}
 		return result;
 	}

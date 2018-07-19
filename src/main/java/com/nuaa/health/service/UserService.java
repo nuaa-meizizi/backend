@@ -25,7 +25,7 @@ public class UserService {
 		Map<String, Object> data = new HashMap<String, Object>();  
 		User user = userRepository.findUserByNameAndPassword(name,pwd);
 		if (user == null) {
-			result.setStatus(HResult.E_ERROR_PASSWORD_ERROR);
+			result.setStatus(HResult.E_PASSWORD_ERROR);
 		}
 		else {
 			String token = tokenService.updateToken(user.getId());
@@ -43,7 +43,7 @@ public class UserService {
 		Map<String, Object> data = new HashMap<String, Object>();  
 		Boolean exist = userRepository.existsByName(name);
 		if(exist) {
-			result.setStatus(HResult.E_ERROR_USER_EXISTENCE);
+			result.setStatus(HResult.E_USER_EXISTENCE);
 		}
 		else {
 			User user = new User();
