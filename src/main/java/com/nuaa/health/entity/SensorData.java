@@ -20,8 +20,8 @@ public class SensorData {
 	private String addTime;
 	@Column(name = "temperature")
 	private Double temperature;
-	@Column(name = "heartrate")
-	private Integer heartrate;
+	@Column(name = "heartbeat")
+	private Integer heartbeat;
 	@Column(name = "weight")
 	private Integer weight;
 	@Column(name = "D") // 扩张压
@@ -63,12 +63,12 @@ public class SensorData {
 		this.temperature = temperature;
 	}
 
-	public Integer getHeartrate() {
-		return heartrate;
+	public Integer getHeartbeat() {
+		return heartbeat;
 	}
 
-	public void setHeartrate(Integer heartrate) {
-		this.heartrate = heartrate;
+	public void setHeartbeat(Integer heartbeat) {
+		this.heartbeat = heartbeat;
 	}
 
 	public Integer getWeight() {
@@ -103,12 +103,12 @@ public class SensorData {
 		this.type = type;
 	}
 
-	public SensorData(Long userId, String addTime, Double temperature, Integer heartrate, Integer weight,
+	public SensorData(Long userId, String addTime, Double temperature, Integer heartbeat, Integer weight,
 			Integer dPressure, Integer sPressure, Integer type) {
 		this.userId = userId;
 		this.addTime = addTime;
 		this.temperature = temperature;
-		this.heartrate = heartrate;
+		this.heartbeat = heartbeat;
 		this.weight = weight;
 		this.dPressure = dPressure;
 		this.sPressure = sPressure;
@@ -122,7 +122,7 @@ public class SensorData {
 	@Override
 	public String toString() {
 		return "SensorData [id=" + id + ", userId=" + userId + ", addTime=" + addTime + ", temperature=" + temperature
-				+ ", heartrate=" + heartrate + ", weight=" + weight + ", dPressure=" + dPressure + ", sPressure="
+				+ ", heartrate=" + heartbeat + ", weight=" + weight + ", dPressure=" + dPressure + ", sPressure="
 				+ sPressure + ", type=" + type + "]";
 	}
 
@@ -132,7 +132,7 @@ public class SensorData {
 		int result = 1;
 		result = prime * result + ((addTime == null) ? 0 : addTime.hashCode());
 		result = prime * result + ((dPressure == null) ? 0 : dPressure.hashCode());
-		result = prime * result + ((heartrate == null) ? 0 : heartrate.hashCode());
+		result = prime * result + ((heartbeat == null) ? 0 : heartbeat.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((sPressure == null) ? 0 : sPressure.hashCode());
 		result = prime * result + ((temperature == null) ? 0 : temperature.hashCode());
@@ -161,10 +161,10 @@ public class SensorData {
 				return false;
 		} else if (!dPressure.equals(other.dPressure))
 			return false;
-		if (heartrate == null) {
-			if (other.heartrate != null)
+		if (heartbeat == null) {
+			if (other.heartbeat != null)
 				return false;
-		} else if (!heartrate.equals(other.heartrate))
+		} else if (!heartbeat.equals(other.heartbeat))
 			return false;
 		if (id == null) {
 			if (other.id != null)
