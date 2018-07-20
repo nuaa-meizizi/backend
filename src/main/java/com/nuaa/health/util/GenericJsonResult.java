@@ -50,6 +50,7 @@ public class GenericJsonResult<T> {
 		s_messageMapping.put(HResult.E_PASSWORD_ERROR, "用户名或密码错误");
 		s_messageMapping.put(HResult.E_DATABASE_ERROR, "操作数据库出错");
 		s_messageMapping.put(HResult.E_USER_NOTEXIST, "用户不存在");
+		s_messageMapping.put(HResult.E_USER_INFO_EXISTENCE, "用户信息已存在");
 	}
 	
 	private String getMessage(int status) {

@@ -18,7 +18,7 @@ public class UserInfoService {
 	@Autowired
 	UserInfoRepository userinfoRepository;
 
-	public GenericJsonResult<Map<String, Object>> getinfo(Long userid) {
+	public GenericJsonResult<Map<String, Object>> getInfo(Long userid) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Map<String, Object> data = new HashMap<String, Object>();  
 		Boolean exist = userinfoRepository.existsByUserid(userid);
@@ -38,11 +38,11 @@ public class UserInfoService {
 	
 
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> saveinfo(Long userid,String province,Long birthday) {
+	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid,String province,Long birthday) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Boolean exist = userinfoRepository.existsByUserid(userid);
 		if(exist) {
-			result.setStatus(HResult.E_USER_EXISTENCE);
+			result.setStatus(HResult.E_USER_INFO_EXISTENCE);
 		}
 		else {
 			UserInfo userinfo = new UserInfo();
@@ -55,7 +55,7 @@ public class UserInfoService {
     }
 
     @Transactional
-	public GenericJsonResult<Map<String, Object>> updateinfo(Long userid,String province,Long birthday) {
+	public GenericJsonResult<Map<String, Object>> updateInfo(Long userid,String province,Long birthday) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Boolean exist = userinfoRepository.existsByUserid(userid);
 		if(exist) {
