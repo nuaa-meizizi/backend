@@ -1,0 +1,41 @@
+package com.nuaa.health.controller;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.nuaa.health.util.GenericJsonResult;
+import com.nuaa.health.util.HResult;
+
+@RestController
+@RequestMapping(value = "file")
+public class FileController {
+
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public GenericJsonResult<String> upload(@RequestParam("file") MultipartFile file,
+			@RequestParam(value = "token", required = true) String token) {
+		
+		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
+
+		if (!file.isEmpty()) {
+			try {
+				BufferedOutputStream out = new BufferedOutputStream(
+						new FileOutputStream(new File(file.getOriginalFilename())));
+				out.write(file.getBytes());
+				out.flush();
+				out.close();
+			} catch (Exception e) {
+				result.setStatus(HResult.E_UPLOAD_FAIL);
+			}
+		} else {
+			result.setStatus(HResult.E_UPLOAD_FILE_EMPTY);
+		}
+		return result;
+	}
+}

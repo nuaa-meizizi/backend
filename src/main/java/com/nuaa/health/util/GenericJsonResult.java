@@ -51,6 +51,8 @@ public class GenericJsonResult<T> {
 		s_messageMapping.put(HResult.E_DATABASE_ERROR, "操作数据库出错");
 		s_messageMapping.put(HResult.E_USER_NOTEXIST, "用户不存在");
 		s_messageMapping.put(HResult.E_USER_INFO_EXISTENCE, "用户信息已存在");
+		s_messageMapping.put(HResult.E_UPLOAD_FAIL, "上传失败");
+		s_messageMapping.put(HResult.E_UPLOAD_FILE_EMPTY, "文件为空");
 	}
 	
 	private String getMessage(int status) {
