@@ -7,5 +7,5 @@ import com.nuaa.health.entity.SensorData;
 
 @Repository
 public interface SensorDataRepository extends CrudRepository<SensorData, Long> {
-	
+	Boolean existsByUserIdAndAddTimeAndType(Long uid,String addTime,Integer type);
 }
