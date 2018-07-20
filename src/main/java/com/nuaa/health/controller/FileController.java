@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,14 +21,21 @@ public class FileController {
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public GenericJsonResult<String> upload(@RequestParam("file") MultipartFile file,
-			@RequestParam(value = "token", required = true) String token) {
-		
-		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
+			@RequestParam(value = "token", required = true) String token, HttpServletRequest request) {
 
+		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
+		
+		String uploadDir = request.getSession().getServletContext().getRealPath("/")+"upload/";
+		
+		File dir = new File(uploadDir);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		
 		if (!file.isEmpty()) {
 			try {
 				BufferedOutputStream out = new BufferedOutputStream(
-						new FileOutputStream(new File(file.getOriginalFilename())));
+						new FileOutputStream(new File(uploadDir+file.getOriginalFilename())));
 				out.write(file.getBytes());
 				out.flush();
 				out.close();
