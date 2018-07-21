@@ -17,56 +17,52 @@ import com.nuaa.health.util.HResult;
 public class UserInfoService {
 	@Autowired
 	UserInfoRepository userinfoRepository;
-
+	
 	public GenericJsonResult<Map<String, Object>> getInfo(Long userid) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
-		Map<String, Object> data = new HashMap<String, Object>();  
+		Map<String, Object> data = new HashMap<String, Object>();
 		Boolean exist = userinfoRepository.existsByUserid(userid);
-		if(exist) {
-            UserInfo userinfo = new UserInfo();
-            userinfo = userinfoRepository.findUserInfoByUserid(userid);
-			data.put("userid",userinfo.getUserid());
-			data.put("province",userinfo.getProvince());
-			data.put("birthday",userinfo.getBirthday());
-            result.setData(data);
-		}
-		else {
-            result.setStatus(HResult.E_USER_NOTEXIST);
+		if (exist) {
+			UserInfo userinfo = new UserInfo();
+			userinfo = userinfoRepository.findByUserid(userid);
+			data.put("userid", userinfo.getUserid());
+			data.put("province", userinfo.getProvince());
+			data.put("sex", userinfo.getSex());
+			result.setData(data);
+		} else {
+			result.setStatus(HResult.E_USER_NOTEXIST);
 		}
 		return result;
 	}
 	
-
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid,String province,Long birthday) {
+	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid, String province, Integer sex) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Boolean exist = userinfoRepository.existsByUserid(userid);
-		if(exist) {
+		if (exist) {
 			result.setStatus(HResult.E_USER_INFO_EXISTENCE);
-		}
-		else {
+		} else {
 			UserInfo userinfo = new UserInfo();
 			userinfo.setUserid(userid);
 			userinfo.setProvine(province);
-			userinfo.setBirthday(birthday);
+			userinfo.setSex(sex);
 			userinfoRepository.save(userinfo);
 		}
 		return result;
-    }
-
-    @Transactional
-	public GenericJsonResult<Map<String, Object>> updateInfo(Long userid,String province,Long birthday) {
+	}
+	
+	@Transactional
+	public GenericJsonResult<Map<String, Object>> updateInfo(Long userid, String province, Integer sex) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		Boolean exist = userinfoRepository.existsByUserid(userid);
-		if(exist) {
-            UserInfo userinfo = new UserInfo();
+		if (exist) {
+			UserInfo userinfo = new UserInfo();
 			userinfo.setUserid(userid);
 			userinfo.setProvine(province);
-			userinfo.setBirthday(birthday);
+			userinfo.setSex(sex);
 			userinfoRepository.save(userinfo);
-		}
-		else {
-            result.setStatus(HResult.E_USER_NOTEXIST);
+		} else {
+			result.setStatus(HResult.E_USER_NOTEXIST);
 		}
 		return result;
 	}

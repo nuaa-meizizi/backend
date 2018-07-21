@@ -13,25 +13,30 @@ public class UserInfo {
 	private Long userid;
 	@Column(name = "province")
 	private String province;
-	@Column(name = "birthday")
-    private Long birthday;
-    
+	@Column(name = "sex")
+	private Integer sex;
+	
 	public Long getUserid() {
 		return userid;
 	}
+	
 	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
+	
 	public String getProvince() {
 		return province;
 	}
+	
 	public void setProvine(String province) {
 		this.province = province;
 	}
-	public Long getBirthday() {
-		return birthday;
+	
+	public Integer getSex() {
+		return sex;
 	}
-	public void setBirthday(Long birthday) {
-		this.birthday =birthday;
+	
+	public void setSex(Integer sex) {
+		this.sex = sex;
 	}
 }

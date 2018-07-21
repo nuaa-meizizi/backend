@@ -8,5 +8,5 @@ import com.nuaa.health.entity.UserInfo;
 @Repository
 public interface UserInfoRepository extends CrudRepository<UserInfo, Long>{
     Boolean existsByUserid(Long userid);
-    UserInfo findUserInfoByUserid(Long userid);
+    UserInfo findByUserid(Long userid);
 }
