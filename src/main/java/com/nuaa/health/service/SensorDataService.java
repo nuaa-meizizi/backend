@@ -60,7 +60,7 @@ public class SensorDataService {
 		for (int i = 0; i < jsonArray.size(); i++) {
 			JSONObject tmp = jsonArray.getJSONObject(i);
 			String addTime = tmp.getString("time");
-			String temperature = Float.toString(tmp.getFloat("temperature"));
+			Float temperature = tmp.getFloat("temperature");
 			Integer heartbeat = tmp.getInteger("heartbeat");
 			Integer weight = tmp.getInteger("weight");
 			Integer dPressure = tmp.getInteger("bp0");
