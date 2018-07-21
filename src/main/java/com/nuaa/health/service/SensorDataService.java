@@ -27,14 +27,14 @@ public class SensorDataService {
 			JSONObject tmp = jsonArray.getJSONObject(i);
 			String addTime = tmp.getString("time");
 			Double temperature = tmp.getDouble("temperature");
-			Integer heartrate = tmp.getInteger("heartrate");
+			Integer heartbeat = tmp.getInteger("heartbeat");
 			Integer weight = tmp.getInteger("weight");
 			Integer dPressure = tmp.getInteger("bp0");
 			Integer sPressure = tmp.getInteger("bp1");
 			Integer type = tmp.getInteger("type");
 			boolean exist = sensorDataRepository.existsByUserIdAndAddTimeAndType(userId, addTime, type);
 			if (!exist) { // 不存在才插入
-				SensorData sensorData = new SensorData(userId, addTime, temperature, heartrate, weight, dPressure,
+				SensorData sensorData = new SensorData(userId, addTime, temperature, heartbeat, weight, dPressure,
 						sPressure, type);
 				sensorDatas.add(sensorData);
 			}
@@ -61,12 +61,12 @@ public class SensorDataService {
 			JSONObject tmp = jsonArray.getJSONObject(i);
 			String addTime = tmp.getString("time");
 			Double temperature = tmp.getDouble("temperature");
-			Integer heartrate = tmp.getInteger("heartrate");
+			Integer heartbeat = tmp.getInteger("heartbeat");
 			Integer weight = tmp.getInteger("weight");
 			Integer dPressure = tmp.getInteger("bp0");
 			Integer sPressure = tmp.getInteger("bp1");
 			Integer type = tmp.getInteger("type");
-			SensorData sensorData = new SensorData(userId, addTime, temperature, heartrate, weight, dPressure,
+			SensorData sensorData = new SensorData(userId, addTime, temperature, heartbeat, weight, dPressure,
 					sPressure, type);
 			fromRequestSensorDatas.add(sensorData);
 		}
