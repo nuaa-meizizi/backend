@@ -49,7 +49,7 @@ public class SensorController {
 		return sensorDataService.download(userId, jsonParam);
 	}
 	
-	@RequestMapping(value = "/synchinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/synchronization", method = RequestMethod.POST)
 	public GenericJsonResult<ArrayList<SensorData>> synchronization(@RequestBody JSONObject jsonParam, @RequestParam(value = "token", required = true) String token) {
 		GenericJsonResult<ArrayList<SensorData>> result = new GenericJsonResult<ArrayList<SensorData>>(HResult.S_OK);
 		Long userId = tokenService.getUid(token);
