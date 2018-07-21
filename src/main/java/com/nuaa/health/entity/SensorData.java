@@ -19,7 +19,7 @@ public class SensorData {
 	@Column(name = "addtime")
 	private String addTime;
 	@Column(name = "temperature")
-	private Double temperature;
+	private Float temperature;
 	@Column(name = "heartbeat")
 	private Integer heartbeat;
 	@Column(name = "weight")
@@ -55,11 +55,11 @@ public class SensorData {
 		this.addTime = addTime;
 	}
 
-	public Double getTemperature() {
+	public Float getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(Double temperature) {
+	public void setTemperature(Float temperature) {
 		this.temperature = temperature;
 	}
 
@@ -103,7 +103,7 @@ public class SensorData {
 		this.type = type;
 	}
 
-	public SensorData(Long userId, String addTime, Double temperature, Integer heartbeat, Integer weight,
+	public SensorData(Long userId, String addTime, Float temperature, Integer heartbeat, Integer weight,
 			Integer dPressure, Integer sPressure, Integer type) {
 		this.userId = userId;
 		this.addTime = addTime;
