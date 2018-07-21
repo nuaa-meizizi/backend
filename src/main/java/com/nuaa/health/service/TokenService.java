@@ -58,8 +58,18 @@ public class TokenService {
 		return addToken(uid);
 	}
 	
+	@Transactional
 	public Long getUid(String token) {
-		Long uid = tokenRepository.findTokenByToken(token).getUserId();
+		Token tokenInfo = tokenRepository.findTokenByToken(token);
+		if (tokenInfo == null) {
+			return null;
+		}
+		Long uid = tokenInfo.getUserId();
+		Long expire = Long.valueOf(tokenInfo.getExpire());
+		if (expire < System.currentTimeMillis()) {				//token过期
+			tokenRepository.deleteByUserId(uid);  				//顺便删除
+			return null;
+		}
 		return uid;
 	}
 

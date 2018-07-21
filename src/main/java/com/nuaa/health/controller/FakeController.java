@@ -20,11 +20,17 @@ public class FakeController {
 	SimulationService simulationService;
 	@Autowired
 	TokenService tokenService;
+
 	@RequestMapping(value = "/fakedata", method = RequestMethod.GET)
-	public GenericJsonResult<HashMap<String, Object>> fakeData(@RequestParam(value = "token", required = true) String token){
-		GenericJsonResult<HashMap<String, Object>> res= new GenericJsonResult<>(HResult.S_OK);
+	public GenericJsonResult<HashMap<String, Object>> fakeData(
+			@RequestParam(value = "token", required = true) String token) {
+		GenericJsonResult<HashMap<String, Object>> res = new GenericJsonResult<>(HResult.S_OK);
 		Long uid = tokenService.getUid(token);
-		res.setData(simulationService.fakeData(uid));
+		if (uid == null) {
+			res.setStatus(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
+		} else {
+			res.setData(simulationService.fakeData(uid));
+		}
 		return res;
 	}
 }

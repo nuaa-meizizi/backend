@@ -29,10 +29,15 @@ public class SensorController {
 			@RequestParam(value = "token", required = true) String token) {
 		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
 		Long userId = tokenService.getUid(token);
-		int ret = sensorDataService.upload(userId, jsonParam);
-		if (ret != HResult.S_OK) {
-			result.setStatus(ret);
+		if (userId == null) {
+			result.setStatus(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
+		} else {
+			int ret = sensorDataService.upload(userId, jsonParam);
+			if (ret != HResult.S_OK) {
+				result.setStatus(ret);
+			}
 		}
+
 		return result;
 	}
 
@@ -40,6 +45,9 @@ public class SensorController {
 	public GenericJsonResult<ArrayList<SensorData>> download(@RequestBody JSONObject jsonParam,
 			@RequestParam(value = "token", required = true) String token) {
 		Long userId = tokenService.getUid(token);
+		if (userId == null) {
+			return new GenericJsonResult<ArrayList<SensorData>>(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
+		}
 		return sensorDataService.download(userId, jsonParam);
 	}
 
@@ -48,11 +56,15 @@ public class SensorController {
 			@RequestParam(value = "token", required = true) String token) {
 		GenericJsonResult<ArrayList<SensorData>> result = new GenericJsonResult<ArrayList<SensorData>>(HResult.S_OK);
 		Long userId = tokenService.getUid(token);
-		int ret = sensorDataService.upload(userId, jsonParam);
-		if (ret == HResult.S_OK) {
-			return sensorDataService.download(userId, jsonParam);
+		if (userId == null) {
+			result.setStatus(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
+		} else {
+			int ret = sensorDataService.upload(userId, jsonParam);
+			if (ret == HResult.S_OK) {
+				return sensorDataService.download(userId, jsonParam);
+			}
+			result.setStatus(ret);
 		}
-		result.setStatus(ret);
 		return result;
 	}
 }

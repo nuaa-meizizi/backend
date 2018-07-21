@@ -24,14 +24,11 @@ public class FileController {
 			@RequestParam(value = "token", required = true) String token, HttpServletRequest request) {
 
 		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
-		
 		String uploadDir = request.getSession().getServletContext().getRealPath("/")+"upload/";
-		
 		File dir = new File(uploadDir);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		
 		if (!file.isEmpty()) {
 			try {
 				BufferedOutputStream out = new BufferedOutputStream(
