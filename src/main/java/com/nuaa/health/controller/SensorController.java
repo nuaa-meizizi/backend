@@ -23,10 +23,9 @@ public class SensorController {
 	private SensorDataService sensorDataService;
 	@Autowired
 	private TokenService tokenService;
-
+	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public GenericJsonResult<String> upload(@RequestBody JSONObject jsonParam,
-			@RequestParam(value = "token", required = true) String token) {
+	public GenericJsonResult<String> upload(@RequestBody JSONObject jsonParam, @RequestParam(value = "token", required = true) String token) {
 		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
 		Long userId = tokenService.getUid(token);
 		if (userId == null) {
@@ -37,23 +36,21 @@ public class SensorController {
 				result.setStatus(ret);
 			}
 		}
-
+		
 		return result;
 	}
-
+	
 	@RequestMapping(value = "/download", method = RequestMethod.POST)
-	public GenericJsonResult<ArrayList<SensorData>> download(@RequestBody JSONObject jsonParam,
-			@RequestParam(value = "token", required = true) String token) {
+	public GenericJsonResult<ArrayList<SensorData>> download(@RequestBody JSONObject jsonParam, @RequestParam(value = "token", required = true) String token) {
 		Long userId = tokenService.getUid(token);
 		if (userId == null) {
 			return new GenericJsonResult<ArrayList<SensorData>>(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
 		}
 		return sensorDataService.download(userId, jsonParam);
 	}
-
-	@RequestMapping(value = "/synchronization", method = RequestMethod.POST)
-	public GenericJsonResult<ArrayList<SensorData>> synchronization(@RequestBody JSONObject jsonParam,
-			@RequestParam(value = "token", required = true) String token) {
+	
+	@RequestMapping(value = "/synchinfo", method = RequestMethod.POST)
+	public GenericJsonResult<ArrayList<SensorData>> synchronization(@RequestBody JSONObject jsonParam, @RequestParam(value = "token", required = true) String token) {
 		GenericJsonResult<ArrayList<SensorData>> result = new GenericJsonResult<ArrayList<SensorData>>(HResult.S_OK);
 		Long userId = tokenService.getUid(token);
 		if (userId == null) {

@@ -37,7 +37,7 @@ public class UserInfoService {
 	}
 	
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid, String province, Integer sex, String phone) {
+	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid, String province, String sex, String phone) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
 		UserInfo userinfo = new UserInfo();
 		userinfo.setUserid(userid);
@@ -45,6 +45,28 @@ public class UserInfoService {
 		userinfo.setSex(sex);
 		userinfo.setPhone(phone);
 		userinfoRepository.save(userinfo);
+		return result;
+	}
+	
+	@Transactional
+	public GenericJsonResult<UserInfo> synchInfo(Long userid, String province, String sex, String phone) {
+		GenericJsonResult<UserInfo> result = new GenericJsonResult<UserInfo>(HResult.S_OK);
+		UserInfo userinfo = userinfoRepository.findByUserid(userid);
+		if (userinfo == null) {
+			userinfo = new UserInfo();
+			userinfo.setUserid(userid);
+		}
+		if (!province.equals("province")) {
+			userinfo.setProvince(province);
+		}
+		if (!sex.equals("no_exist")) {
+			userinfo.setSex(sex);
+		}
+		if (!phone.equals("no_exist")) {
+			userinfo.setPhone(phone);
+		}
+		userinfoRepository.save(userinfo);
+		result.setData(userinfo);
 		return result;
 	}
 }

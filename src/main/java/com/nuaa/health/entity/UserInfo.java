@@ -14,7 +14,7 @@ public class UserInfo {
 	@Column(name = "province")
 	private String province;
 	@Column(name = "sex")
-	private Integer sex;
+	private String sex;
 	@Column(name = "phone")
 	private String phone;
 	
@@ -34,11 +34,11 @@ public class UserInfo {
 		this.province = province;
 	}
 	
-	public Integer getSex() {
+	public String getSex() {
 		return sex;
 	}
 	
-	public void setSex(Integer sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 	
