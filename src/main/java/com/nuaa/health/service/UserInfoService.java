@@ -28,6 +28,7 @@ public class UserInfoService {
 			data.put("userid", userinfo.getUserid());
 			data.put("province", userinfo.getProvince());
 			data.put("sex", userinfo.getSex());
+			data.put("phone", userinfo.getPhone());
 			result.setData(data);
 		} else {
 			result.setStatus(HResult.E_USER_NOTEXIST);
@@ -36,34 +37,14 @@ public class UserInfoService {
 	}
 	
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid, String province, Integer sex) {
+	public GenericJsonResult<Map<String, Object>> saveInfo(Long userid, String province, Integer sex, String phone) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
-		Boolean exist = userinfoRepository.existsByUserid(userid);
-		if (exist) {
-			result.setStatus(HResult.E_USER_INFO_EXISTENCE);
-		} else {
-			UserInfo userinfo = new UserInfo();
-			userinfo.setUserid(userid);
-			userinfo.setProvine(province);
-			userinfo.setSex(sex);
-			userinfoRepository.save(userinfo);
-		}
-		return result;
-	}
-	
-	@Transactional
-	public GenericJsonResult<Map<String, Object>> updateInfo(Long userid, String province, Integer sex) {
-		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
-		Boolean exist = userinfoRepository.existsByUserid(userid);
-		if (exist) {
-			UserInfo userinfo = new UserInfo();
-			userinfo.setUserid(userid);
-			userinfo.setProvine(province);
-			userinfo.setSex(sex);
-			userinfoRepository.save(userinfo);
-		} else {
-			result.setStatus(HResult.E_USER_NOTEXIST);
-		}
+		UserInfo userinfo = new UserInfo();
+		userinfo.setUserid(userid);
+		userinfo.setProvince(province);
+		userinfo.setSex(sex);
+		userinfo.setPhone(phone);
+		userinfoRepository.save(userinfo);
 		return result;
 	}
 }

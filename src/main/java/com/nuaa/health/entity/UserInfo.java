@@ -15,6 +15,8 @@ public class UserInfo {
 	private String province;
 	@Column(name = "sex")
 	private Integer sex;
+	@Column(name = "phone")
+	private String phone;
 	
 	public Long getUserid() {
 		return userid;
@@ -28,7 +30,7 @@ public class UserInfo {
 		return province;
 	}
 	
-	public void setProvine(String province) {
+	public void setProvince(String province) {
 		this.province = province;
 	}
 	
@@ -38,5 +40,13 @@ public class UserInfo {
 	
 	public void setSex(Integer sex) {
 		this.sex = sex;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

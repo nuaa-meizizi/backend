@@ -30,24 +30,15 @@ public class UserInfoController {
 		return userinfoService.getInfo(userId);
 	}
 	
-	@RequestMapping(value = "/updateinfo", method = RequestMethod.GET)
-	public GenericJsonResult<Map<String, Object>> updateInfo(@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "province", required = true) String province, @RequestParam(value = "sex", required = true) Integer sex) {
-		Long userId = tokenService.getUid(token);
-		if (userId == null) {
-			return new GenericJsonResult<Map<String, Object>>(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
-		}
-		return userinfoService.updateInfo(userId, province, sex);
-	}
-	
 	@RequestMapping(value = "/saveinfo", method = RequestMethod.GET)
 	public GenericJsonResult<Map<String, Object>> saveInfo(@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "province", required = true) String province, @RequestParam(value = "sex", required = true) Integer sex) {
+			@RequestParam(value = "province", required = true) String province, @RequestParam(value = "sex", required = true) Integer sex,
+			@RequestParam(value = "phone", required = true) String phone) {
 		Long userId = tokenService.getUid(token);
 		if (userId == null) {
 			return new GenericJsonResult<Map<String, Object>>(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
 		}
-		return userinfoService.saveInfo(userId, province, sex);
+		return userinfoService.saveInfo(userId, province, sex, phone);
 	}
 	
 }
