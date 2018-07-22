@@ -68,6 +68,13 @@ public class SimulationService {
 		else
 			res.put("heartbeat", new Random().nextInt(30) + 100); 	// 偏高大于100
 		
+		if (simulation.getWeight() == 1) {
+			res.put("weight", new Random().nextInt(10) + 45); 	// 正常体重在45~55之间
+		} else if (simulation.getWeight() == 0)
+			res.put("weight", new Random().nextInt(5) + 40); 	// 偏低小于60
+		else
+			res.put("weight", new Random().nextInt(20) + 55); 	// 偏高大于100
+		
 		return res;
 	}
 }
