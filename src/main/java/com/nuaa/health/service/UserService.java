@@ -1,5 +1,6 @@
 package com.nuaa.health.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +57,22 @@ public class UserService {
 			data.put("token", token);
 			result.setData(data);
 		}
+		return result;
+	}
+	
+	public GenericJsonResult<ArrayList<Map<String, Object>>> getAllUser() {
+		GenericJsonResult<ArrayList<Map<String, Object>>> result = new GenericJsonResult<>(HResult.S_OK);
+		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+		ArrayList<Map<String, Object>> ret = new ArrayList<>();
+
+		for (int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+			Map<String, Object> temp = new HashMap<>();
+			temp.put("userid", user.getId());
+			temp.put("name", user.getName());
+			ret.add(temp);
+		}
+		result.setData(ret);
 		return result;
 	}
 }
