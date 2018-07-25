@@ -12,7 +12,7 @@ public class Device {
 	@Column(name = "imei")
 	private String imei;
 	@Column(name = "updated_time")
-	private String updatedTime;
+	private Long updatedTime;
 
 	public String getImei() {
 		return imei;
@@ -22,11 +22,11 @@ public class Device {
 		this.imei = imei;
 	}
 
-	public String getUpdatedTime() {
+	public Long getUpdatedTime() {
 		return updatedTime;
 	}
 
-	public void setUpdatedTime(String updatedTime) {
+	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
 	}
 }

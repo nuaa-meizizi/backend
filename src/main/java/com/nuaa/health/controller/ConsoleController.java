@@ -13,12 +13,21 @@ import com.nuaa.health.util.HResult;
 @RestController
 @RequestMapping(value = "console")
 public class ConsoleController {
-	@Autowired DeviceService deviceService;
-	
+	@Autowired
+	DeviceService deviceService;
+
 	@RequestMapping(value = "/iamlive", method = RequestMethod.GET)
 	public GenericJsonResult<String> iAmLive(@RequestParam(value = "imei", required = true) String imei) {
 		GenericJsonResult<String> res = new GenericJsonResult<>(HResult.S_OK);
 		deviceService.update(imei);
+		return res;
+	}
+
+	@RequestMapping(value = "/livenum", method = RequestMethod.GET)
+	public GenericJsonResult<Integer> liveNum() {
+		GenericJsonResult<Integer> res = new GenericJsonResult<>(HResult.S_OK);
+		int count = deviceService.countLiveNum();
+		res.setData(count);
 		return res;
 	}
 }
