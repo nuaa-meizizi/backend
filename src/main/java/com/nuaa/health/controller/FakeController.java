@@ -27,7 +27,11 @@ public class FakeController {
 		GenericJsonResult<HashMap<String, Object>> res = new GenericJsonResult<>(HResult.S_OK);
 		Long uid = tokenService.getUid(token);
 		if (uid == null) {
-			res.setStatus(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
+			if (token.equals("anony")) {		//匿名用户默认用uid控制
+				res.setData(simulationService.fakeData(1L));
+			}
+			else
+				res.setStatus(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE);
 		} else {
 			res.setData(simulationService.fakeData(uid));
 		}
