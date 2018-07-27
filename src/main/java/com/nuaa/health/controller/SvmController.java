@@ -2,7 +2,10 @@ package com.nuaa.health.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.dmg.pmml.FieldName;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nuaa.health.svm.svm_make_node;
 import com.nuaa.health.svm.svm_train;
+import com.nuaa.health.util.ClassificationModel;
 import com.nuaa.health.util.GenericJsonResult;
 import com.nuaa.health.util.HResult;
 
-import libsvm.svm;
 import libsvm.svm_model;
 
 @RestController
@@ -27,14 +29,26 @@ public class SvmController {
 		GenericJsonResult<Double> res = new GenericJsonResult<Double>(HResult.S_OK);
 		try {
 			File file = null;
-			if (type.equals("eye"))
-				file = ResourceUtils.getFile("classpath:eye_model.txt");
-			else if((type.equals("health")))
-				file = ResourceUtils.getFile("classpath:health_model.txt");
-			else
+			if (type.equals("eye")) {
+				file = ResourceUtils.getFile("classpath:eye.pmml");
+//				model = svm.svm_load_model(file.getPath());
+//				res.setData(svm.svm_predict(model, svm_make_node.makeNode(args)));
+			}
+			else if((type.equals("health"))) {
+				file = ResourceUtils.getFile("classpath:health.pmml");
+				ClassificationModel clf = new ClassificationModel(file.getPath());
+				Map<FieldName, Number> waitPreSample = new HashMap<>();
+		        waitPreSample.put(new FieldName("temperature"), 10);
+		        waitPreSample.put(new FieldName("weight"), 1);
+		        waitPreSample.put(new FieldName("heartrate"), 3);
+		        waitPreSample.put(new FieldName("D"), 2);
+		        waitPreSample.put(new FieldName("S"), 2);
+			}
+			else {
 				res.setStatus(HResult.E_ERROR_PARAMETER);
-			model = svm.svm_load_model(file.getPath());
-			res.setData(svm.svm_predict(model, svm_make_node.makeNode(args)));
+				return res;
+			}
+
 		} catch (IOException e) {
 			res.setStatus(HResult.E_FILE_EXCEPTION);
 			e.printStackTrace();
@@ -60,5 +74,16 @@ public class SvmController {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	private Map<FieldName, Number> getFieldNameForHealth(String arg) {
+		String[] args = arg.split(" ");
+		Map<FieldName, Number> waitPreSample = new HashMap<>();
+        waitPreSample.put(new FieldName("temperature"), Float.parseFloat(args[0]));
+        waitPreSample.put(new FieldName("weight"), Integer.parseInt(args[1]));
+        waitPreSample.put(new FieldName("heartrate"), 3);
+        waitPreSample.put(new FieldName("D"), 2);
+        waitPreSample.put(new FieldName("S"), 2);
+		return waitPreSample;
 	}
 }
