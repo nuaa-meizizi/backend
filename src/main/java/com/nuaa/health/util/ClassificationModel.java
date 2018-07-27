@@ -46,7 +46,6 @@ public class ClassificationModel {
 
                 this.modelEvaluator = (Evaluator) modelEvaluatorFactory.newModelEvaluator(pmml);
                 modelEvaluator.verify();
-                System.out.println("加载模型成功！");
             }
         } catch (SAXException e) {
             e.printStackTrace();
