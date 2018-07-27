@@ -16,4 +16,6 @@ public class HResult {
 	public final static int E_PASSWORD_ERROR = 130002;
 	public final static int E_USER_INFO_EXISTENCE = 130003;
 	public final static int E_TOKEN_EXPIRE_OR_NOT_EXISTENCE = 130004;
+	
+	public final static int E_SETTING_EXISTENCE = 140000;
 }

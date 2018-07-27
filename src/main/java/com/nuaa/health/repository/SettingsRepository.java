@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.nuaa.health.entity.Settings;
 
 @Repository
-public interface SettingsRepository extends CrudRepository<Settings, Integer>{
-    Boolean existsByid(Integer id);
-    Settings findByid(Integer id);
+public interface SettingsRepository extends CrudRepository<Settings, Integer> {
+	Boolean existsByName(String name);
+
+	Settings findByName(String name);
 }

@@ -54,6 +54,7 @@ public class GenericJsonResult<T> {
 		s_messageMapping.put(HResult.E_UPLOAD_FAIL, "上传失败");
 		s_messageMapping.put(HResult.E_UPLOAD_FILE_EMPTY, "文件为空");
 		s_messageMapping.put(HResult.E_TOKEN_EXPIRE_OR_NOT_EXISTENCE, "登陆信息错误");
+		s_messageMapping.put(HResult.E_SETTING_EXISTENCE, "该配置项不存在");
 	}
 	
 	private String getMessage(int status) {

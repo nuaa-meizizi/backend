@@ -1,6 +1,5 @@
 package com.nuaa.health.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -17,30 +16,38 @@ import com.nuaa.health.util.HResult;
 public class SettingsService {
 	@Autowired
 	SettingsRepository settingsRepository;
+	private String name = "picUpload";
 
-	public GenericJsonResult<Map<String, Object>> getPath(Integer id) {
-		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
-		Map<String, Object> data = new HashMap<String, Object>();
-		Boolean exist = settingsRepository.existsByid(id);
+	public GenericJsonResult<String> getPath() {
+		GenericJsonResult<String> result = new GenericJsonResult<>(HResult.S_OK);
+		Boolean exist = settingsRepository.existsByName(name);
 		if (exist) {
-			Settings settings = new Settings();
-			settings = settingsRepository.findByid(id);
-			data.put("id", settings.getId());
-			data.put("path", settings.getPath());
-			result.setData(data);
+			Settings settings = settingsRepository.findByName(name);
+			result.setData(settings.getValue());
 		} else {
-			result.setStatus(HResult.E_USER_NOTEXIST);
+			result.setStatus(HResult.E_SETTING_EXISTENCE);
 		}
 		return result;
 	}
 
 	@Transactional
-	public GenericJsonResult<Map<String, Object>> savePath(Integer id, String path) {
+	public GenericJsonResult<Map<String, Object>> savePath(String path) {
 		GenericJsonResult<Map<String, Object>> result = new GenericJsonResult<Map<String, Object>>(HResult.S_OK);
-		Settings settings = new Settings();
-		settings.setId(id);
-		settings.setPath(path);
-		settingsRepository.save(settings);
+		Settings settings = null;
+		Boolean exist = settingsRepository.existsByName(name);
+		if (exist) {
+			settings = settingsRepository.findByName(name);
+			settings.setValue(path);
+		} else {
+			settings = new Settings();
+			settings.setName(name);
+			settings.setValue(path);
+		}
+		try {
+			settingsRepository.save(settings);
+		} catch (Exception e) {
+			result.setStatus(HResult.E_DATABASE_ERROR);
+		}
 		return result;
 	}
 }
