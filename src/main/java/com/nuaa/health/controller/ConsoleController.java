@@ -1,5 +1,7 @@
 package com.nuaa.health.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,9 @@ public class ConsoleController {
 	}
 	
 	@RequestMapping(value = "/livenum", method = RequestMethod.GET)
-	public GenericJsonResult<Integer> liveNum() {
+	public GenericJsonResult<Integer> liveNum(HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		GenericJsonResult<Integer> res = new GenericJsonResult<>(HResult.S_OK);
 		int count = deviceService.countLiveNum();
 		res.setData(count);
@@ -37,7 +41,9 @@ public class ConsoleController {
 	}
 	
 	@RequestMapping(value = "/setStatus", method = RequestMethod.POST)
-	public GenericJsonResult<String> fakeData(@RequestBody Simulation simulation) {
+	public GenericJsonResult<String> fakeData(@RequestBody Simulation simulation,HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		GenericJsonResult<String> res = new GenericJsonResult<>(HResult.S_OK);
 		try {
 			simulationRepository.save(simulation);

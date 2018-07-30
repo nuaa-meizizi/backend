@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,7 +43,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/getalluser", method = RequestMethod.GET)
-	public GenericJsonResult<ArrayList<Map<String, Object>>> getAllUser() {
+	public GenericJsonResult<ArrayList<Map<String, Object>>> getAllUser(HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		return userService.getAllUser();
 	}
 	
