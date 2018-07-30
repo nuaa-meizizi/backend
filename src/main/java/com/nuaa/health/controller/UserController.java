@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nuaa.health.entity.User;
+import com.nuaa.health.repository.UserRepository;
 import com.nuaa.health.service.TokenService;
 import com.nuaa.health.service.UserService;
 import com.nuaa.health.util.GenericJsonResult;
@@ -20,6 +22,8 @@ import com.nuaa.health.util.HResult;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private TokenService tokenService;
@@ -48,6 +52,9 @@ public class UserController {
 		Map<String, Object> data = new HashMap<String, Object>();  
 		data.put("id", uid);
 		data.put("token", token);
+		User user = userRepository.findUserById(uid);
+		data.put("name", user.getName());
+		data.put("password", user.getPassword());
 		result.setData(data);
 		return result;
 	}
